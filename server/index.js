@@ -52,8 +52,8 @@ app.delete("/api/delete", (req, res) => {
 app.put("/api/update", (req, res) => {
   const title = req.body.title;
   const contents = req.body.contents;
-  const sqlUpdate = "UPDATE SET Board title = ? WHERE contents = ? ";
-  db.query(sqlUpdate, [title, contents], (err, result) => {
+  const sqlUpdate = "UPDATE SET Board contents = ? WHERE title = ? ";
+  db.query(sqlUpdate, [contents, title], (err, result) => {
     if (err) {
       console.log(err);
     }
