@@ -1,11 +1,13 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
-import { Route, Link, Switch } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
-import { styled, createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import Main from "./pages/Main";
 import Write from "./pages/Write";
 import List from "./pages/List";
+import Single from "./pages/Single";
+import Axios from "axios";
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -22,6 +24,29 @@ function App() {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [list, setList] = useState([]);
+  const [currentId, setCurrentId] = useState(null);
+
+  const deleteDetail = (e) => {
+    if (window.confirm("삭제할건가용?"))
+      Axios.delete("http://localhost:3001/api/delete/", {
+        data: currentId,
+      });
+    window.location.replace("/list");
+  };
+
+  useEffect(() => {
+    Axios.get("http://localhost:3001/api/get").then((response) => {
+      setList(response.data);
+    });
+  }, []);
+
+  const update = () => {
+    Axios.put("http://localhost:3001/api/update", {
+      title: title,
+      contents: contents,
+    });
+  };
+
   return (
     <>
       <GlobalStyle />
@@ -35,10 +60,20 @@ function App() {
               setTitle={setTitle}
               contents={contents}
               setContents={setContents}
+              setList={setList}
             />
           </Route>
           <Route path="/list">
-            <List list={list} setList={setList} />
+            <List list={list} />
+          </Route>
+          <Route path="/single/:id">
+            <Single
+              list={list}
+              setCurrentId={setCurrentId}
+              deleteDetail={deleteDetail}
+              setTitle={setTitle}
+              setContent={setContents}
+            />
           </Route>
         </Switch>
       </div>

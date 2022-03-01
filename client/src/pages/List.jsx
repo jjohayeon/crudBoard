@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import Axios from 'axios'
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 const ListBox = styled.div`
   display: flex;
@@ -19,17 +19,14 @@ const ListBox = styled.div`
     padding: 15px 0;
     border-bottom: 1px solid #9999;
   }
-`
+  td:nth-child(2) {
+    cursor: pointer;
+  }
+`;
 
-const List = ({ list, setList }) => {
-  const thead = ['id', 'title', 'date']
-  const listArray = [...list]
-  console.log(listArray)
-  useEffect(() => {
-    Axios.get('http://localhost:3001/api/get').then((response) => {
-      setList(response.data)
-    })
-  }, [])
+const List = ({ list }) => {
+  const thead = ["id", "title", "date"];
+  const history = useHistory();
 
   return (
     <div className="container">
@@ -40,23 +37,31 @@ const List = ({ list, setList }) => {
             <col width="70%"></col>
             <col width="20%"></col>
           </colgroup>
-          <tr>
-            {thead.map((i) => (
-              <th>{i}</th>
-            ))}
-          </tr>
-          {listArray.map(function (i) {
-            return (
-              <tr>
+          <thead>
+            <tr>
+              {thead.map((i) => (
+                <th key={i}>{i}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((i) => (
+              <tr key={i.id}>
                 <td>{i?.id}</td>
-                <td>{i?.title}</td>
+                <td
+                  onClick={() => {
+                    history.push(`/single/${i.id}`);
+                  }}
+                >
+                  {i?.title}
+                </td>
                 <td>{i?.date}</td>
               </tr>
-            )
-          })}
+            ))}
+          </tbody>
         </table>
       </ListBox>
     </div>
-  )
-}
-export default List
+  );
+};
+export default List;

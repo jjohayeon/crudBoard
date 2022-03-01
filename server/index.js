@@ -21,7 +21,7 @@ app.post("/api/insert", (req, res) => {
   const title = req.body.title;
   const contents = req.body.contents;
   const sqlInsert =
-    "INSERT INTO Board (title, contents, date) VALUES (?,?,SYSDATE ())";
+    "INSERT INTO Board (title, contents, date) VALUES (?,?,NOW())";
   db.query(sqlInsert, [title, contents], (err, result) => {
     res.send(result);
   });
@@ -34,6 +34,31 @@ app.get("/api/get", (req, res) => {
     res.send(result);
   });
 });
+
+//db삭제하기
+app.delete("/api/delete", (req, res) => {
+  const title = req.body.title;
+  const sqlDelete = "DELETE FROM Board WHERE title = ?";
+  console.log(req);
+
+  db.query(sqlDelete, [title], (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
+//db update
+// app.update("/api/update", (req, res) => {
+//   const title = req.body.title;
+//   const contents = req.body.contents;
+//   const sqlUpdate = "UPDATE SET Board contents = ? WHERE title = ? ";
+//   db.query(sqlUpdate, [contents, title], (err, result) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//   });
+// });
 
 //서버포트연결~
 app.listen(port, () => {
