@@ -67,6 +67,7 @@ const Write = ({ title, setTitle, contents, setContents, setList }) => {
       window.location.replace("/list");
     }, 2000);
   };
+
   return (
     <div className="container">
       <WriteBox>
@@ -82,6 +83,7 @@ const Write = ({ title, setTitle, contents, setContents, setList }) => {
           placeholder="contents"
           onChange={(e) => {
             setContents(e.target.value);
+            console.log(contents);
           }}
         ></textarea>
         <button onClick={submit}>Submit</button>

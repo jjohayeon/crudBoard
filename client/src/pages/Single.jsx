@@ -81,6 +81,9 @@ const Single = ({
   setCurrentId,
   setTitle,
   setContents,
+  title,
+  contents,
+  update,
 }) => {
   const modalRef = useRef(null);
   const { id } = useParams();
@@ -122,17 +125,21 @@ const Single = ({
           <label>Title</label>
           <input
             type="text"
-            value={listId?.title}
+            defaultValue={listId?.title}
             onChange={(e) => {
-              setNewTitle(e.target.value);
-              console.log(newTitle);
+              setTitle(e.target.value);
             }}
           />
           <label>contents</label>
-          <textarea value={listId?.contents}></textarea>
+          <textarea
+            defaultValue={listId?.contents}
+            onChange={(e) => {
+              setContents(e.target.value);
+              console.log(contents);
+            }}
+          ></textarea>
           <div>
-            <button>초기화</button>
-            <button>수정완료</button>
+            <button onClick={update}>수정완료</button>
             <button
               onClick={() => {
                 modalRef.current.style = "display:none";

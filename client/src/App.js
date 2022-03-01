@@ -33,19 +33,24 @@ function App() {
       });
     window.location.replace("/list");
   };
+  const update = () => {
+    Axios.put("http://localhost:3001/api/update", {
+      title: title,
+      contents: contents,
+    })
+      .then(() => {
+        console.log("success!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
       setList(response.data);
     });
   }, []);
-
-  const update = () => {
-    Axios.put("http://localhost:3001/api/update", {
-      title: title,
-      contents: contents,
-    });
-  };
 
   return (
     <>
@@ -71,8 +76,11 @@ function App() {
               list={list}
               setCurrentId={setCurrentId}
               deleteDetail={deleteDetail}
+              title={title}
+              contents={contents}
               setTitle={setTitle}
-              setContent={setContents}
+              setContents={setContents}
+              update={update}
             />
           </Route>
         </Switch>
