@@ -25,6 +25,8 @@ function App() {
   const [contents, setContents] = useState("");
   const [list, setList] = useState([]);
   const [currentId, setCurrentId] = useState(null);
+  const [newTitle, setNewTitle] = useState("");
+  const [newCont, setNewCont] = useState("");
 
   const deleteDetail = (e) => {
     if (window.confirm("삭제할건가용?"))
@@ -35,11 +37,13 @@ function App() {
   };
   const update = () => {
     Axios.put("http://localhost:3001/api/update", {
+      data: currentId,
       title: title,
       contents: contents,
     })
       .then((response) => {
         console.log(response);
+        alert(response);
       })
       .catch((err) => {
         console.log(err);
@@ -81,6 +85,8 @@ function App() {
               setTitle={setTitle}
               setContents={setContents}
               update={update}
+              setNewTitle={setNewTitle}
+              setNewCont={setNewCont}
             />
           </Route>
         </Switch>

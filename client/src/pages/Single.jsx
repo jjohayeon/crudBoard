@@ -84,6 +84,8 @@ const Single = ({
   title,
   contents,
   update,
+  setNewTitle,
+  setNewCont,
 }) => {
   const modalRef = useRef(null)
   const { id } = useParams()
@@ -96,9 +98,6 @@ const Single = ({
   const modalOpen = () => {
     modalRef.current.style = 'display: block'
   }
-
-  const [newTitle, setNewTitle] = useState('')
-  const [newCont, setNewCont] = useState('')
 
   return (
     <div>
