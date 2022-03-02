@@ -53,11 +53,14 @@ app.put("/api/update", (req, res) => {
   const title = req.body.title;
   const contents = req.body.contents;
   const id = req.body.id;
-  const sqlUpdate = "UPDATE Board SET contents=?, title=? WHERE id = ?";
-  db.query(sqlUpdate, [contents, title, id], (err, result) => {
+
+  const sql = "UPDATE Board SET contents=?, title=? WHERE id = ?";
+  db.query(sql, [contents, title, id], (err, result) => {
     if (err) {
-      console.log(err);
-    } else console.log(result);
+      return res.send(`error ${err}`);
+    }
+    console.log({ result });
+    res.send({ msg: "OK", result });
   });
 });
 

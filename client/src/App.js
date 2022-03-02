@@ -35,20 +35,6 @@ function App() {
       });
     window.location.replace("/list");
   };
-  const update = () => {
-    Axios.put("http://localhost:3001/api/update", {
-      data: currentId,
-      title: title,
-      contents: contents,
-    })
-      .then((response) => {
-        console.log(response);
-        alert(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   useEffect(() => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
@@ -84,9 +70,9 @@ function App() {
               contents={contents}
               setTitle={setTitle}
               setContents={setContents}
-              update={update}
               setNewTitle={setNewTitle}
               setNewCont={setNewCont}
+              currentId={currentId}
             />
           </Route>
         </Switch>

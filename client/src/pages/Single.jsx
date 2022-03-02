@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import Axios from 'axios'
@@ -83,7 +83,6 @@ const Single = ({
   setContents,
   title,
   contents,
-  update,
   setNewTitle,
   setNewCont,
 }) => {
@@ -97,6 +96,27 @@ const Single = ({
 
   const modalOpen = () => {
     modalRef.current.style = 'display: block'
+  }
+  // const update = async () => {
+  //   let params = {
+  //     id: currentId,
+  //     title: title,
+  //     contents: contents,
+  //   }
+  //   try {
+  //     const res = await Axios.put('http://localhost:3001/api/update', params)
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
+
+  const update = (e) => {
+    if (window.confirm('업뎃?'))
+      Axios.put('http://localhost:3001/api/update', {
+        id: listId,
+        title: title,
+        contents: contents,
+      }).then(console.log('success'))
   }
 
   return (
@@ -137,7 +157,7 @@ const Single = ({
             }}
           ></textarea>
           <div>
-            <button onClick={update}>수정완료</button>
+            <button onClick={() => update()}>수정완료</button>
             <button
               onClick={() => {
                 modalRef.current.style = 'display:none'
