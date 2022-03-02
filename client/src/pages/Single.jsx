@@ -89,10 +89,11 @@ const Single = ({
   const modalRef = useRef(null)
   const { id } = useParams()
 
-  let listId = list.find(function (a) {
+  let posts = list.find(function (a) {
     return a.id == id
   })
-  setCurrentId(listId)
+  console.log({ posts })
+  setCurrentId(id)
 
   const modalOpen = () => {
     modalRef.current.style = 'display: block'
@@ -105,18 +106,27 @@ const Single = ({
   //   }
   //   try {
   //     const res = await Axios.put('http://localhost:3001/api/update', params)
+  //     const res = await Axios.put('http://localhost:3001/api/update', params)
+  //     const res = await Axios.put('http://localhost:3001/api/update', params)
+  //     const res = await Axios.put('http://localhost:3001/api/update', params)
   //   } catch (err) {
   //     console.log(err)
   //   }
   // }
 
   const update = (e) => {
-    if (window.confirm('업뎃?'))
-      Axios.put('http://localhost:3001/api/update', {
-        id: listId,
-        title: title,
-        contents: contents,
-      }).then(console.log('success'))
+    Axios.put('http://localhost:3001/api/update', {
+      id: posts.id,
+      title: title,
+      contents: contents,
+    })
+      .then((res) => {
+        console.log({ res })
+      })
+      .catch((err) => {
+        console.log({ err })
+      })
+    window.location.replace('/list')
   }
 
   return (
@@ -124,8 +134,8 @@ const Single = ({
       <Detail>
         <h1>SinglePage</h1>
         <div className="detailBox">
-          <h2>{listId?.title}</h2>
-          <p>{listId?.contents}</p>
+          <h2>{posts?.title}</h2>
+          <p>{posts?.contents}</p>
           <div>
             <button onClick={modalOpen}>수정</button>
             <button
@@ -144,14 +154,14 @@ const Single = ({
           <label>Title</label>
           <input
             type="text"
-            defaultValue={listId?.title}
+            defaultValue={posts?.title}
             onChange={(e) => {
               setTitle(e.target.value)
             }}
           />
           <label>contents</label>
           <textarea
-            defaultValue={listId?.contents}
+            defaultValue={posts?.contents}
             onChange={(e) => {
               setContents(e.target.value)
             }}

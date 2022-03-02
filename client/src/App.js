@@ -24,7 +24,7 @@ function App() {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [list, setList] = useState([]);
-  const [currentId, setCurrentId] = useState(null);
+  const [currentId, setCurrentId] = useState(-1);
   const [newTitle, setNewTitle] = useState("");
   const [newCont, setNewCont] = useState("");
 
