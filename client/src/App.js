@@ -37,11 +37,9 @@ function App() {
     Axios.put("http://localhost:3001/api/update", {
       title: title,
       contents: contents,
-    });
-    setTitle(title);
-    setContents(contents)
-      .then(() => {
-        console.log("success!");
+    })
+      .then((response) => {
+        console.log(response);
       })
       .catch((err) => {
         console.log(err);

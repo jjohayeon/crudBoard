@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
-import styled from "styled-components";
-import Axios from "axios";
-import { useHistory } from "react-router-dom";
+import React, { useRef } from 'react'
+import styled from 'styled-components'
+import Axios from 'axios'
+import { useHistory } from 'react-router-dom'
 
 const WriteBox = styled.div`
   margin-top: 100px;
@@ -26,7 +26,7 @@ const WriteBox = styled.div`
     padding: 15px 40px;
     margin-top: 30px;
   }
-`;
+`
 const Modal = styled.div`
   display: none;
   width: 300px;
@@ -44,29 +44,28 @@ const Modal = styled.div`
   button {
     padding: 5px 10px;
   }
-`;
+`
 
 const Write = ({ title, setTitle, contents, setContents, setList }) => {
-  const modalRef = useRef(null);
-  const history = useHistory();
+  const modalRef = useRef(null)
+  const history = useHistory()
 
   const submit = () => {
-    Axios.post("http://localhost:3001/api/insert", {
+    Axios.post('http://localhost:3001/api/insert', {
       title: title,
       contents: contents,
     })
       .then(() => {
-        console.log("success!");
+        console.log('success!')
       })
       .catch((err) => {
-        console.log(err);
-      });
-    console.log(modalRef.current);
-    modalRef.current.style = "display: block";
+        console.log(err)
+      })
+    modalRef.current.style = 'display: block'
     setTimeout(() => {
-      window.location.replace("/list");
-    }, 2000);
-  };
+      window.location.replace('/list')
+    }, 2000)
+  }
 
   return (
     <div className="container">
@@ -76,14 +75,14 @@ const Write = ({ title, setTitle, contents, setContents, setList }) => {
           type="text"
           placeholder="title"
           onChange={(e) => {
-            setTitle(e.target.value);
+            setTitle(e.target.value)
           }}
         ></input>
         <textarea
           placeholder="contents"
           onChange={(e) => {
-            setContents(e.target.value);
-            console.log(contents);
+            setContents(e.target.value)
+            console.log(contents)
           }}
         ></textarea>
         <button onClick={submit}>Submit</button>
@@ -92,15 +91,15 @@ const Write = ({ title, setTitle, contents, setContents, setList }) => {
         <h2>저장되었습니당</h2>
         <button
           onClick={() => {
-            modalRef.current.style = "display: none";
-            window.location.replace("/list");
+            modalRef.current.style = 'display: none'
+            window.location.replace('/list')
           }}
         >
           닫기
         </button>
       </Modal>
     </div>
-  );
-};
+  )
+}
 
-export default Write;
+export default Write

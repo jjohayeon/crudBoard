@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import Axios from "axios";
+import React, { useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import styled from 'styled-components'
+import Axios from 'axios'
 
 const Detail = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ const Detail = styled.div`
       margin: 10px;
     }
   }
-`;
+`
 
 const UpdateModal = styled.div`
   display: none;
@@ -73,7 +73,7 @@ const UpdateModal = styled.div`
     margin: 10px;
     margin-top: 20px;
   }
-`;
+`
 
 const Single = ({
   list,
@@ -85,20 +85,20 @@ const Single = ({
   contents,
   update,
 }) => {
-  const modalRef = useRef(null);
-  const { id } = useParams();
+  const modalRef = useRef(null)
+  const { id } = useParams()
 
   let listId = list.find(function (a) {
-    return a.id == id;
-  });
-  setCurrentId(listId);
+    return a.id == id
+  })
+  setCurrentId(listId)
 
   const modalOpen = () => {
-    modalRef.current.style = "display: block";
-  };
+    modalRef.current.style = 'display: block'
+  }
 
-  const [newTitle, setNewTitle] = useState("");
-  const [newCont, setNewCont] = useState("");
+  const [newTitle, setNewTitle] = useState('')
+  const [newCont, setNewCont] = useState('')
 
   return (
     <div>
@@ -111,7 +111,7 @@ const Single = ({
             <button onClick={modalOpen}>수정</button>
             <button
               onClick={() => {
-                deleteDetail();
+                deleteDetail()
               }}
             >
               삭제
@@ -127,22 +127,21 @@ const Single = ({
             type="text"
             defaultValue={listId?.title}
             onChange={(e) => {
-              setTitle(e.target.value);
+              setTitle(e.target.value)
             }}
           />
           <label>contents</label>
           <textarea
             defaultValue={listId?.contents}
             onChange={(e) => {
-              setContents(e.target.value);
-              console.log(contents);
+              setContents(e.target.value)
             }}
           ></textarea>
           <div>
             <button onClick={update}>수정완료</button>
             <button
               onClick={() => {
-                modalRef.current.style = "display:none";
+                modalRef.current.style = 'display:none'
               }}
             >
               닫기
@@ -151,7 +150,7 @@ const Single = ({
         </div>
       </UpdateModal>
     </div>
-  );
-};
+  )
+}
 
-export default Single;
+export default Single
