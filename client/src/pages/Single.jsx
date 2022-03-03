@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
-import Axios from 'axios'
+import React, { useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import Axios from "axios";
 
 const Detail = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ const Detail = styled.div`
       margin: 10px;
     }
   }
-`
+`;
 
 const UpdateModal = styled.div`
   display: none;
@@ -73,7 +73,7 @@ const UpdateModal = styled.div`
     margin: 10px;
     margin-top: 20px;
   }
-`
+`;
 
 const Single = ({
   list,
@@ -83,64 +83,45 @@ const Single = ({
   setContents,
   title,
   contents,
-  setNewTitle,
-  setNewCont,
 }) => {
-  const modalRef = useRef(null)
-  const { id } = useParams()
+  const modalRef = useRef(null);
+  const { id } = useParams();
 
-  let posts = list.find(function (a) {
-    return a.id == id
-  })
-  console.log({ posts })
-  setCurrentId(id)
-
+  let listId = list.find(function (a) {
+    return a.id == id;
+  });
+  setCurrentId(listId); //listId변수에 객체가 저장되어있음 listId.id로 사용
   const modalOpen = () => {
-    modalRef.current.style = 'display: block'
-  }
-  // const update = async () => {
-  //   let params = {
-  //     id: currentId,
-  //     title: title,
-  //     contents: contents,
-  //   }
-  //   try {
-  //     const res = await Axios.put('http://localhost:3001/api/update', params)
-  //     const res = await Axios.put('http://localhost:3001/api/update', params)
-  //     const res = await Axios.put('http://localhost:3001/api/update', params)
-  //     const res = await Axios.put('http://localhost:3001/api/update', params)
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
+    modalRef.current.style = "display: block";
+  };
 
-  const update = (e) => {
-    Axios.put('http://localhost:3001/api/update', {
-      id: posts.id,
+  const update = function () {
+    Axios.put("http://localhost:3001/api/update", {
+      id: listId.id,
       title: title,
       contents: contents,
     })
-      .then((res) => {
-        console.log({ res })
+      .then(function (res) {
+        console.log({ res });
       })
-      .catch((err) => {
-        console.log({ err })
-      })
-    window.location.replace('/list')
-  }
+      .catch(function (err) {
+        console.log({ err });
+      });
+    window.location.replace("/list");
+  };
 
   return (
     <div>
       <Detail>
         <h1>SinglePage</h1>
         <div className="detailBox">
-          <h2>{posts?.title}</h2>
-          <p>{posts?.contents}</p>
+          <h2>{listId?.title}</h2>
+          <p>{listId?.contents}</p>
           <div>
             <button onClick={modalOpen}>수정</button>
             <button
               onClick={() => {
-                deleteDetail()
+                deleteDetail();
               }}
             >
               삭제
@@ -154,23 +135,30 @@ const Single = ({
           <label>Title</label>
           <input
             type="text"
-            defaultValue={posts?.title}
+            defaultValue={listId?.title}
             onChange={(e) => {
-              setTitle(e.target.value)
+              setTitle(e.target.value);
             }}
           />
           <label>contents</label>
           <textarea
-            defaultValue={posts?.contents}
+            defaultValue={listId?.contents}
             onChange={(e) => {
-              setContents(e.target.value)
+              setContents(e.target.value);
+              console.log(contents);
             }}
           ></textarea>
           <div>
-            <button onClick={() => update()}>수정완료</button>
             <button
               onClick={() => {
-                modalRef.current.style = 'display:none'
+                update();
+              }}
+            >
+              수정완료
+            </button>
+            <button
+              onClick={() => {
+                modalRef.current.style = "display:none";
               }}
             >
               닫기
@@ -179,7 +167,7 @@ const Single = ({
         </div>
       </UpdateModal>
     </div>
-  )
-}
+  );
+};
 
-export default Single
+export default Single;

@@ -24,9 +24,7 @@ function App() {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [list, setList] = useState([]);
-  const [currentId, setCurrentId] = useState(-1);
-  const [newTitle, setNewTitle] = useState("");
-  const [newCont, setNewCont] = useState("");
+  const [currentId, setCurrentId] = useState(null);
 
   const deleteDetail = (e) => {
     if (window.confirm("삭제할건가용?"))
@@ -70,9 +68,6 @@ function App() {
               contents={contents}
               setTitle={setTitle}
               setContents={setContents}
-              setNewTitle={setNewTitle}
-              setNewCont={setNewCont}
-              currentId={currentId}
             />
           </Route>
         </Switch>
