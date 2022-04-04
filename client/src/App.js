@@ -26,6 +26,12 @@ function App() {
   const [list, setList] = useState([]);
   const [currentId, setCurrentId] = useState(null);
 
+  //페이지네이션 state
+  const [posts, setPosts] = useState([]);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1); //현재 페이지 번호
+  const offset = (page - 1) * limit;
+
   const deleteDetail = (e) => {
     if (window.confirm("삭제할건가용?"))
       Axios.delete("http://localhost:3001/api/delete/", {
@@ -39,6 +45,11 @@ function App() {
       setList(response.data);
     });
   }, []);
+
+  //useEffect(()=>{
+  //fetch("http://localhost:3001/api/delete/").then((res)=>{res.json()})
+  //.then((data)=>{setPosts(data)})
+  //})
 
   return (
     <>
